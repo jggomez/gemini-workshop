@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "gemini-workshop"
+version = "1.0.0"
+description = ""
+authors = ["jggomez <juan.gomez01@gmail.com>"]
+readme = "README.md"
+packages = [{include = "gemini_workshop"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+python-dotenv = "^1.0.1"
+google-generativeai = "^0.5.2"
+rich = "^13.7.1"
+pillow = "^10.3.0"
+opencv-python = "^4.9.0.80"
+sentence-transformers = "^2.7.0"
+pypdf2 = "^3.0.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
