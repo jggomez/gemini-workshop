@@ -20,6 +20,8 @@ if __name__ == "__main__":
 
     prompt = [
         "Write a nature blog with images and references with the following image:", img]
+    num_tokens = model.count_tokens(prompt)
+    console.print(num_tokens)
     response = model.generate_content(prompt, stream=True)
     for chunk in response:
         console.print(chunk.text)

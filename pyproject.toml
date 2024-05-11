@@ -15,6 +15,7 @@ pillow = "^10.3.0"
 opencv-python = "^4.9.0.80"
 sentence-transformers = "^2.7.0"
 pypdf2 = "^3.0.1"
+langchain-google-genai = "^1.0.3"
 
 
 [build-system]
