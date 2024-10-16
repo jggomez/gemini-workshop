@@ -19,6 +19,7 @@ numpy = "^1.26.4"
 langchain-google-vertexai = "^1.0.5"
 google-generativeai = "^0.7.1"
 google-cloud-aiplatform = "^1.57.0"
+gradio = "^5.1.0"
 
 
 [build-system]

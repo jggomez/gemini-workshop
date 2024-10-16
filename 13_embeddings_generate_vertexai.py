@@ -73,7 +73,7 @@ def save_to_pickle(file_path, data):
 if __name__ == "__main__":
     aiplatform.init(project='wordboxdev', location='us-central1')
 
-    rows = read_csv_and_get_values("southpark.csv")
+    rows = read_csv_and_get_values("bob_burgers.csv")
 
     model_name = "text-embedding-004"
     task = "SEMANTIC_SIMILARITY"
@@ -90,24 +90,29 @@ if __name__ == "__main__":
 
     db = firestore_v1.Client(database="embeddings")
     batch_firestore = db.batch()
-    content_text_collection = db.collection('ContentTexts')
+    content_text_collection = db.collection('Contents')
     all_embeddings = []
 
     for batch in batches:
         console.print(f"Processing batch of {len(batch)} rows...")
+
         texts = [item[0] for item in batch]
-        text_ids = [item[1] for item in batch]
-        console.print(f"Using {len(texts)} texts...")
+        content_ids = [item[1] for item in batch]
+        interest_ids = [item[2] for item in batch]
+        content_difficulties = [item[3] for item in batch]
+
         inputs = [TextEmbeddingInput(text, task) for text in texts]
         embeddings = model.get_embeddings(inputs, **kwargs)
 
-        for text, text_id, embedding in zip(texts, text_ids, embeddings):
+        for text, content_id, interest_id, content_difficulty, embedding in zip(texts, content_ids, interest_ids, content_difficulties, embeddings):
             console.print(str(embedding.values)[:50], '... TRIMMED ...')
             ref_doc = content_text_collection.document()
             batch_firestore.set(ref_doc, {
                 'text': text,
-                'id': text_id,
-                'embeddings': Vector(embedding.values)
+                'contentid': content_id,
+                'interestid': interest_id,
+                'contentdifficulty': content_difficulty,
+                'embeddingtext': Vector(embedding.values)
             })
             all_embeddings.append(embedding.values)
 
