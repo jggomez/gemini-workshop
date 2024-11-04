@@ -4,7 +4,6 @@ from dotenv import load_dotenv
 from vertexai.language_models import TextEmbeddingInput, TextEmbeddingModel
 from google.cloud import firestore_v1
 from google.cloud.firestore_v1.vector import Vector
-import numpy as np
 
 load_dotenv()
 
@@ -73,9 +72,9 @@ def save_to_pickle(file_path, data):
 if __name__ == "__main__":
     aiplatform.init(project='wordboxdev', location='us-central1')
 
-    rows = read_csv_and_get_values("bob_burgers.csv")
+    rows = read_csv_and_get_values("office.csv")
 
-    model_name = "text-embedding-004"
+    model_name = "text-multilingual-embedding-002"
     task = "SEMANTIC_SIMILARITY"
     dimensionality: int = 768
     console.print(f"Using model {model_name}...")
@@ -90,7 +89,7 @@ if __name__ == "__main__":
 
     db = firestore_v1.Client(database="embeddings")
     batch_firestore = db.batch()
-    content_text_collection = db.collection('Contents')
+    content_text_collection = db.collection('ContentEmbeddings')
     all_embeddings = []
 
     for batch in batches:

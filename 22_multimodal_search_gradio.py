@@ -10,6 +10,7 @@ import gradio as gr
 db = firestore_v1.Client(database="embeddings")
 content_multimodal_collection = db.collection('ContentMultimodal')
 content_text_collection = db.collection('ContentTexts')
+# Change this url
 url_media = "https://media/series/"
 
 
